@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SlidersHorizontal, Utensils, Landmark } from "lucide-react";
 
 import Toggle from "./Toggle";
-import { initialPreferences, initialNotifications } from "../../lib/mockData";
+import { initialPreferences } from "../../lib/mockData";
 
 const PREF_ICONS = {
   utensils: Utensils,
@@ -11,15 +11,10 @@ const PREF_ICONS = {
 
 function SystemPreferences() {
   const [prefs, setPrefs] = useState(initialPreferences);
-  const [notifs, setNotifs] = useState(initialNotifications);
 
   const togglePref = (id) =>
     setPrefs((prev) =>
       prev.map((p) => (p.id === id ? { ...p, enabled: !p.enabled } : p))
-    );
-  const toggleNotif = (id) =>
-    setNotifs((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, enabled: !n.enabled } : n))
     );
 
   return (
@@ -54,33 +49,6 @@ function SystemPreferences() {
             </div>
           );
         })}
-      </div>
-
-      <p className="mt-6 text-[10px] font-semibold tracking-[2px] text-slate-400">
-        NOTIFICATION SETTINGS
-      </p>
-      <div className="mt-3 space-y-3">
-        {notifs.map((notif) => (
-          <div
-            key={notif.id}
-            className="flex items-center justify-between rounded-xl px-2 py-1"
-          >
-            <div className="flex items-center gap-2">
-              <span
-                className={`h-1.5 w-1.5 rounded-full ${
-                  notif.enabled ? "bg-rose-500" : "bg-slate-300"
-                }`}
-              />
-              <span className="text-sm font-medium text-slate-700">
-                {notif.title}
-              </span>
-            </div>
-            <Toggle
-              value={notif.enabled}
-              onChange={() => toggleNotif(notif.id)}
-            />
-          </div>
-        ))}
       </div>
     </div>
   );

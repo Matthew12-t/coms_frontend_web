@@ -5,7 +5,6 @@ import { fetchCanteen, fetchCanteenHistory } from "../services/canteenService";
 import { fetchMenusByCanteen } from "../services/menuService";
 import { Card, CardHeader, CardTitle, CardDescription } from "../components/ui/Card";
 import Badge from "../components/ui/Badge";
-import NotifyMeButton from "../components/notifications/NotifyMeButton";
 import MenuCatalog from "../components/menu/MenuCatalog";
 import { densityTone } from "../lib/utils";
 
@@ -52,9 +51,6 @@ function CanteenDetail() {
               {latest ? new Date(latest.created_at).toLocaleTimeString() : "-"}
             </p>
           </div>
-        </div>
-        <div className="mt-6">
-          <NotifyMeButton canteenId={canteen.id} canteenName={canteen.name} />
         </div>
       </Card>
 

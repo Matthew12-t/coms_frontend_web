@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (email, password) => {
     const result = await registerRequest(email, password);
+    if (result?.session?.access_token) setUser(result.user ?? null);
     return result;
   };
 

@@ -1,48 +1,111 @@
-import { LayoutGrid, ChevronDown, Globe, LogOut } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { LayoutGrid, LogOut, Loader2 } from "lucide-react";
 
-function Field({ label, value, icon }) {
+import { useAuth } from "../../hooks/useAuth";
+import { useTheme } from "../../contexts/ThemeContext";
+import { useLanguage } from "../../contexts/LanguageContext";
+
+function SelectField({ label, value, options, onChange }) {
   return (
     <div>
-      <p className="text-xs text-slate-500">{label}</p>
-      <div className="mt-1 flex items-center justify-between rounded-xl border border-slate-200 px-4 py-2.5">
-        <span className="text-sm text-slate-700">{value}</span>
-        {icon ?? <ChevronDown size={14} className="text-slate-400" />}
-      </div>
+      <p className="text-xs text-slate-500 dark:text-slate-400">{label}</p>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-brand-400 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200"
+      >
+        {options.map((o) => (
+          <option key={o.value} value={o.value}>{o.label}</option>
+        ))}
+      </select>
     </div>
   );
 }
 
+function resolveErrorMessage(error, fallback) {
+  return error?.response?.data?.error ?? error?.message ?? fallback;
+}
+
 function ApplicationSettings() {
+  const { logout } = useAuth();
+  const { theme, setTheme } = useTheme();
+  const { language, setLanguage, t } = useLanguage();
+  const navigate = useNavigate();
+  const [loggingOut, setLoggingOut] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const themeOptions = [
+    { value: "light", label: t("settings.light") },
+    { value: "dark",  label: t("settings.dark") },
+  ];
+
+  const languageOptions = [
+    { value: "en", label: t("settings.english") },
+    { value: "id", label: t("settings.indonesian") },
+  ];
+
+  const handleLogout = async () => {
+    if (loggingOut) return;
+    setErrorMessage(null);
+    setLoggingOut(true);
+    try {
+      await logout();
+      navigate("/login", { replace: true });
+    } catch (error) {
+      setErrorMessage(resolveErrorMessage(error, t("settings.logoutError")));
+      setLoggingOut(false);
+    }
+  };
+
   return (
-    <div className="flex h-full flex-col rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100">
+    <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100 dark:bg-slate-800 dark:ring-slate-700">
       <div className="flex items-center gap-2">
-        <LayoutGrid size={18} className="text-brand-900" />
-        <h3 className="text-lg font-bold text-slate-800">Application Settings</h3>
+        <LayoutGrid size={18} className="text-brand-900 dark:text-brand-100" />
+        <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">{t("settings.title")}</h3>
       </div>
 
-      <p className="mt-5 text-[10px] font-semibold tracking-[2px] text-slate-400">
-        APP PREFERENCES
+      <p className="mt-5 text-[10px] font-semibold tracking-[2px] text-slate-400 dark:text-slate-500">
+        {t("settings.appPreferences")}
       </p>
 
-      <div className="mt-3 space-y-4">
-        <Field label="Theme Mode" value="System Default" />
-        <Field
-          label="Language"
-          value="English (US)"
-          icon={<Globe size={14} className="text-slate-400" />}
+      <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <SelectField
+          label={t("settings.themeMode")}
+          value={theme}
+          options={themeOptions}
+          onChange={setTheme}
+        />
+        <SelectField
+          label={t("settings.language")}
+          value={language}
+          options={languageOptions}
+          onChange={setLanguage}
         />
       </div>
 
-      <div className="mt-auto pt-8">
+      <div className="mt-8">
         <button
           type="button"
-          className="flex w-full items-center justify-center gap-2 rounded-full border border-rose-300 py-3 text-sm font-semibold text-rose-600 hover:bg-rose-50"
+          onClick={handleLogout}
+          disabled={loggingOut}
+          aria-busy={loggingOut}
+          className="flex w-full items-center justify-center gap-2 rounded-full border border-rose-300 py-3 text-sm font-semibold text-rose-600 transition-colors hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-60 dark:border-rose-500 dark:text-rose-400 dark:hover:bg-rose-950"
         >
-          <LogOut size={14} />
-          Log Out
+          {loggingOut ? (
+            <Loader2 size={14} className="animate-spin" />
+          ) : (
+            <LogOut size={14} />
+          )}
+          {loggingOut ? t("settings.loggingOut") : t("settings.logout")}
         </button>
-        <p className="mt-3 text-center text-[11px] tracking-widest text-slate-400">
-          C.O.M.S. Desktop Client v2.4.1-stable
+        {errorMessage && (
+          <p role="alert" className="mt-2 text-center text-xs font-medium text-rose-600 dark:text-rose-400">
+            {errorMessage}
+          </p>
+        )}
+        <p className="mt-3 text-center text-[11px] tracking-widest text-slate-400 dark:text-slate-500">
+          {t("settings.version")}
         </p>
       </div>
     </div>

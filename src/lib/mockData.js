@@ -28,24 +28,74 @@ export const keyInsights = {
   },
 };
 
-export const mapPins = [
-  { id: "borju", name: "Kantin Borju", x: 0.42, y: 0.45 },
-  { id: "gkub", name: "Kantin GKUB 1", x: 0.55, y: 0.32 },
-  { id: "sipil", name: "Kantin Sipil", x: 0.32, y: 0.58 },
-  { id: "gku", name: "Kantin GKU Timur", x: 0.66, y: 0.62 },
-  { id: "labtek", name: "Labtek V", x: 0.5, y: 0.74 },
+export const canteenList = [
+  { id: "borju",  name: "Kantin Borju" },
+  { id: "sipil",  name: "Kantin Sipil" },
+  { id: "gku",    name: "Kantin GKU Timur" },
+  { id: "labtek", name: "Labtek V" },
 ];
 
-export const mapDetail = {
-  name: "Kantin Borju",
-  location: "Labtek V",
-  hours: "08.00-17.00",
-  inLine: 12,
-  status: "Low Flow",
-  waitMins: 8,
-  histogram: [25, 35, 80, 45, 25],
-  histogramActive: 2,
-  menus: ["Menu Makan", "Daftar Menu", "Special"],
+export const canteenDetails = {
+  borju: {
+    name: "Kantin Borju",
+    location: "Labtek V",
+    hours: "08.00–17.00",
+    inLine: 12,
+    statusTone: "success",
+    status: "Low Flow",
+    waitMins: 8,
+    histogram: [25, 35, 80, 45, 25],
+    histogramActive: 2,
+    menus: ["Menu Makan", "Daftar Menu", "Special"],
+  },
+  sipil: {
+    name: "Kantin Sipil",
+    location: "Gedung Sipil",
+    hours: "08.00–16.00",
+    inLine: 34,
+    statusTone: "danger",
+    status: "Peak Flow",
+    waitMins: 15,
+    histogram: [30, 55, 90, 70, 40],
+    histogramActive: 2,
+    menus: ["Menu Makan", "Daftar Menu", "Minuman"],
+  },
+  gku: {
+    name: "Kantin GKU Timur",
+    location: "GKU Timur",
+    hours: "08.00–17.00",
+    inLine: 20,
+    statusTone: "neutral",
+    status: "Moderate",
+    waitMins: 11,
+    histogram: [15, 30, 60, 40, 20],
+    histogramActive: 2,
+    menus: ["Menu Makan", "Daftar Menu", "Snack"],
+  },
+  gkub: {
+    name: "Kantin GKUB 1",
+    location: "GKUB",
+    hours: "08.00–15.00",
+    inLine: 8,
+    statusTone: "success",
+    status: "Low Flow",
+    waitMins: 5,
+    histogram: [10, 20, 45, 25, 10],
+    histogramActive: 2,
+    menus: ["Menu Makan", "Daftar Menu", "Minuman"],
+  },
+  labtek: {
+    name: "Labtek V",
+    location: "Labtek V",
+    hours: "08.00–16.00",
+    inLine: 5,
+    statusTone: "success",
+    status: "Low Flow",
+    waitMins: 3,
+    histogram: [8, 15, 35, 20, 8],
+    histogramActive: 2,
+    menus: ["Menu Makan", "Snack", "Minuman"],
+  },
 };
 
 export const profile = {
@@ -57,9 +107,4 @@ export const profile = {
 export const initialPreferences = [
   { id: "sipil", name: "Kantin Sipil", icon: "utensils", enabled: true },
   { id: "gku", name: "Kantin GKU Timur", icon: "landmark", enabled: true },
-];
-
-export const initialNotifications = [
-  { id: "crowd", title: "Crowd Level Alerts", enabled: true },
-  { id: "peak", title: "Peak Hour Warnings", enabled: false },
 ];

@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, BarChart3, Map, Settings, LifeBuoy } from "lucide-react";
+import { LayoutDashboard, BarChart3, Map, Settings, User } from "lucide-react";
 
-import { profile } from "../../lib/mockData";
+import { fetchProfile } from "../../services/profileService";
 
 const NAV = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, end: true },
@@ -11,13 +12,23 @@ const NAV = [
 ];
 
 function Sidebar() {
+  const [profile, setProfile] = useState({ full_name: null, student_id: null });
+
+  useEffect(() => {
+    fetchProfile().then(setProfile).catch(() => {});
+  }, []);
+
+  const displayName = profile.full_name
+    ? profile.full_name.split(" ").slice(0, 2).join(" ")
+    : "-";
+
   return (
-    <aside className="flex h-screen w-60 flex-col border-r border-slate-200 bg-white">
+    <aside className="flex h-screen w-60 flex-col border-r border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800">
       <div className="px-6 py-7">
-        <p className="text-xl font-extrabold tracking-wide text-brand-900">
+        <p className="text-xl font-extrabold tracking-wide text-brand-900 dark:text-brand-100">
           C.O.M.S.
         </p>
-        <p className="mt-1 text-[10px] font-semibold tracking-[2px] text-slate-400">
+        <p className="mt-1 text-[10px] font-semibold tracking-[2px] text-slate-400 dark:text-slate-500">
           CANTEEN OCCUPANCY
           <br />
           MONITORING SYSTEM
@@ -33,8 +44,8 @@ function Sidebar() {
             className={({ isActive }) =>
               `relative mb-1 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                 isActive
-                  ? "bg-brand-50 text-brand-900"
-                  : "text-slate-500 hover:bg-slate-50"
+                  ? "bg-brand-50 text-brand-900 dark:bg-slate-700 dark:text-brand-100"
+                  : "text-slate-500 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-700"
               }`
             }
           >
@@ -43,7 +54,7 @@ function Sidebar() {
                 <Icon size={18} />
                 <span className={isActive ? "font-semibold" : ""}>{label}</span>
                 {isActive ? (
-                  <span className="absolute right-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-l bg-brand-900" />
+                  <span className="absolute right-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-l bg-brand-900 dark:bg-brand-100" />
                 ) : null}
               </>
             )}
@@ -51,25 +62,20 @@ function Sidebar() {
         ))}
       </nav>
 
-      <div className="border-t border-slate-200 p-4">
-        <div className="mb-3 flex items-center gap-3">
-          <div className="h-9 w-9 overflow-hidden rounded-full bg-amber-200" />
-          <div>
-            <p className="text-sm font-semibold text-slate-800">
-              {profile.name.split(" ")[0]} {profile.name.split(" ")[1]?.[0]}.
+      <div className="border-t border-slate-200 p-4 dark:border-slate-700">
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-amber-100 text-amber-500">
+            <User size={16} />
+          </div>
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold text-slate-800 dark:text-slate-200">
+              {displayName}
             </p>
-            <p className="text-[11px] tracking-wider text-slate-400">
-              ID: {profile.studentId}
+            <p className="text-[11px] tracking-wider text-slate-400 dark:text-slate-500">
+              ID: {profile.student_id ?? "-"}
             </p>
           </div>
         </div>
-        <button
-          type="button"
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-brand-900 py-2 text-sm font-semibold text-white hover:bg-brand-700"
-        >
-          <LifeBuoy size={14} />
-          Support
-        </button>
       </div>
     </aside>
   );

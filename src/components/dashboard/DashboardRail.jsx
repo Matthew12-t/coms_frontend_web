@@ -1,4 +1,7 @@
+import { Link } from "react-router-dom";
 import { Map, AlertTriangle, TrendingUp } from "lucide-react";
+
+import defaultMaps from "../../assets/default_maps.png";
 
 function CardShell({ children, className = "" }) {
   return (
@@ -12,26 +15,23 @@ function DashboardRail() {
   return (
     <div className="space-y-5">
       <CardShell>
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-brand-900">Live Campus Map</h3>
-        </div>
-        <div className="relative mt-4 h-32 overflow-hidden rounded-xl bg-slate-200">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <button
-              type="button"
-              className="flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-xs font-semibold text-brand-900 shadow"
+        <h3 className="text-sm font-semibold text-brand-900">Live Campus Map</h3>
+        <div className="relative mt-4 h-32 overflow-hidden rounded-xl">
+          <img
+            src={defaultMaps}
+            alt="Campus map preview"
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 flex items-center justify-center bg-black/10">
+            <Link
+              to="/campus-map"
+              className="flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-xs font-semibold text-brand-900 shadow hover:bg-slate-50"
             >
               <Map size={14} />
               View Map
-            </button>
+            </Link>
           </div>
         </div>
-        <button
-          type="button"
-          className="mt-3 w-full text-xs font-semibold text-brand-700 hover:text-brand-900"
-        >
-          Expand interactive map
-        </button>
       </CardShell>
 
       <CardShell>

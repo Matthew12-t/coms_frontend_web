@@ -20,8 +20,8 @@ function Register() {
     setSubmitting(true);
     setError(null);
     try {
-      await register(email, password);
-      navigate("/login");
+      const result = await register(email, password);
+      navigate(result?.session ? "/" : "/login");
     } catch (err) {
       setError(err.response?.data?.error || err.message);
     } finally {
