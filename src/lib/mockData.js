@@ -29,10 +29,9 @@ export const keyInsights = {
 };
 
 export const canteenList = [
-  { id: "borju",  name: "Kantin Borju" },
-  { id: "sipil",  name: "Kantin Sipil" },
-  { id: "gku",    name: "Kantin GKU Timur" },
-  { id: "labtek", name: "Labtek V" },
+  { id: "borju", name: "Kantin Borju" },
+  { id: "sipil", name: "Kantin Sipil" },
+  { id: "gku",   name: "Kantin GKU Timur" },
 ];
 
 export const canteenDetails = {
@@ -52,11 +51,11 @@ export const canteenDetails = {
     name: "Kantin Sipil",
     location: "Gedung Sipil",
     hours: "08.00–16.00",
-    inLine: 34,
+    inLine: 54,
     statusTone: "danger",
-    status: "Peak Flow",
-    waitMins: 15,
-    histogram: [30, 55, 90, 70, 40],
+    status: "Peak Now",
+    waitMins: 10,
+    histogram: [55, 65, 90, 70, 60],
     histogramActive: 2,
     menus: ["Menu Makan", "Daftar Menu", "Minuman"],
   },
@@ -67,34 +66,10 @@ export const canteenDetails = {
     inLine: 20,
     statusTone: "neutral",
     status: "Moderate",
-    waitMins: 11,
-    histogram: [15, 30, 60, 40, 20],
+    waitMins: 14,
+    histogram: [10, 18, 35, 22, 12],
     histogramActive: 2,
     menus: ["Menu Makan", "Daftar Menu", "Snack"],
-  },
-  gkub: {
-    name: "Kantin GKUB 1",
-    location: "GKUB",
-    hours: "08.00–15.00",
-    inLine: 8,
-    statusTone: "success",
-    status: "Low Flow",
-    waitMins: 5,
-    histogram: [10, 20, 45, 25, 10],
-    histogramActive: 2,
-    menus: ["Menu Makan", "Daftar Menu", "Minuman"],
-  },
-  labtek: {
-    name: "Labtek V",
-    location: "Labtek V",
-    hours: "08.00–16.00",
-    inLine: 5,
-    statusTone: "success",
-    status: "Low Flow",
-    waitMins: 3,
-    histogram: [8, 15, 35, 20, 8],
-    histogramActive: 2,
-    menus: ["Menu Makan", "Snack", "Minuman"],
   },
 };
 
