@@ -1,16 +1,70 @@
-# React + Vite
+# COMS Web Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Antarmuka web untuk sistem **C.O.M.S (Canteen Occupancy Monitoring System)**. Memungkinkan mahasiswa dan staf memantau kepadatan kantin kampus secara real-time, melihat analitik, peta kampus, serta mengatur preferensi dan notifikasi.
 
-Currently, two official plugins are available:
+## Cara Kerja
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Dashboard ini terhubung ke backend COMS melalui REST API. Data kepadatan diperbarui secara berkala menggunakan polling. Pengguna dapat memilih kantin favorit, melihat rekomendasi kantin terbaik, dan mengeksplorasi analitik jam sibuk.
 
-## React Compiler
+## Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19 + Vite**
+- **React Router** untuk navigasi
+- **Tailwind CSS** + komponen UI kustom (`src/components/ui`)
+- **Recharts** untuk grafik analitik
+- **Axios** untuk komunikasi API
+- **Lucide React** untuk ikon
 
-## Expanding the ESLint configuration
+## Requirements
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Node.js 18+
+- npm
+
+## Instalasi & Menjalankan Lokal
+
+```bash
+npm install
+cp .env.example .env.local
+# Isi VITE_API_URL di .env.local
+npm run dev
+```
+
+`VITE_API_URL` harus mengarah ke backend yang berjalan, contoh: `http://localhost:3000/api`.
+
+## Build untuk Produksi
+
+```bash
+npm run build
+```
+
+Output tersimpan di folder `dist/`.
+
+## Environment Variables
+
+| Variable | Keterangan |
+|----------|------------|
+| `VITE_API_URL` | URL base API backend |
+
+## Struktur Project
+
+```
+src/
+├── components/   Komponen UI (ui/, layout/, dashboard/, analytics/, maps/, settings/, notifications/, menu/)
+├── contexts/     Provider Auth dan Preferences
+├── hooks/        useAuth, useFetch, usePolling, useNotificationPermission
+├── lib/          Instance axios, utility functions
+├── pages/        Dashboard, Analytics, CampusMap, CanteenDetail, Settings, Login, Register
+└── services/     Helper API per resource
+```
+
+## Deploy
+
+Web dashboard di-deploy ke **Vercel**.
+
+### Langkah Deploy ke Vercel
+
+1. Import repo ini ke [Vercel](https://vercel.com)
+2. Set environment variable `VITE_API_URL` ke URL backend Railway (`https://...up.railway.app/api`)
+3. Vercel otomatis mendeteksi Vite melalui `vercel.json` (build = `npm run build`, output = `dist`)
+
+**URL Produksi:** https://coms-ten-zeta.vercel.app/
