@@ -78,7 +78,7 @@ function Dashboard() {
   const liveMins = calcMins(livePeople);
 
   const grid = useMemo(() => {
-    if (favoriteIds.length === 0) return canteens;
+    if (favoriteIds.length === 0) return [];
     return canteens.filter((c) => favoriteIds.includes(c.id));
   }, [canteens, favoriteIds]);
 
