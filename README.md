@@ -63,8 +63,4 @@ Web dashboard di-deploy ke **Vercel**.
 
 ### Langkah Deploy ke Vercel
 
-1. Import repo ini ke [Vercel](https://vercel.com)
-2. Set environment variable `VITE_API_URL` ke URL backend Railway (`https://...up.railway.app/api`)
-3. Vercel otomatis mendeteksi Vite melalui `vercel.json` (build = `npm run build`, output = `dist`)
-
 **URL Produksi:** https://coms-ten-zeta.vercel.app/
