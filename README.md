@@ -61,6 +61,4 @@ src/
 
 Web dashboard di-deploy ke **Vercel**.
 
-### Langkah Deploy ke Vercel
-
 **URL Produksi:** https://coms-ten-zeta.vercel.app/
